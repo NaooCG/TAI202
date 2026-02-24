@@ -1,5 +1,4 @@
 #importaciones
-from fastapi import FastAPI
 from fastapi import FastAPI, status, HTTPException
 import asyncio
 from typing import Optional
@@ -18,10 +17,7 @@ usuarios=[
     {"id":3,"nombre":"Dulce","edad":21},
 ]
 
-#Intancia del objeto/servidor
-app = FastAPI()
 
-#Endspoints (ubucacion de los recursos/rutas)
 #Endpoints
 @app.get("/")
 async def holamundo():
@@ -34,13 +30,7 @@ async def bienvenido():
         "mensaje":"Hola mundo FastAPI",
         "estatus":"200"
         }
-#Endspoints con parametros obligatorios
-@app.get("/saludo/{nombre}")
-async def saludar(nombre: str):
-    return {"mensaje": f"Hola {nombre}"}
 
-#Endspoints con parametros opcionales
-from typing import Optional
 @app.get("/v1/ParametroOb/{id}", tags=["Parametro obligatorio"])
 async def consultauno(id:int):
     return {"mensaje": "Usuario encontrado", 
@@ -53,12 +43,13 @@ async def consultatodos(id:Optional[int]=None):
     if id is not None: 
         for usuariok in usuarios:
             if usuariok["id"] == id:
-                return {"mensaje":"Usuario encontrado","usuario":usuariok,"status":"200"}
-        return {"mensaje":"Usuario no encontrado","status":"200"}
+                return {"mensaje":"Usuario encontrado",
+                        "usuario":usuariok}
+        return {"mensaje":"usuario no encontrado","status":"200"}
     else:
         return {"mensaje":"No se proporciono un id","status":"200"}
     
-@app.get("/v1/usuarios/", tags=["CRUD HTTP"])
+@app.get("/v1/usuarios/", tags=["HTTP CRUD"])
 async def consulta():
     return {
         "total":len(usuarios),
@@ -66,7 +57,7 @@ async def consulta():
         "status":"200"
     }
 
-@app.post("/v1/usuarios/", tags=["CRUD HTTP"])
+@app.post("/v1/usuarios/", tags=["HTTP CRUD"])
 async def agregar_usuario(usuario: dict):
     for usr in usuarios:
         if usr["id"] == usuario.get("id"):
@@ -81,7 +72,7 @@ async def agregar_usuario(usuario: dict):
         "status":"200"      
     }
 
-@app.put("/v1/usuarios/{id}", tags=["CRUD HTTP"])
+@app.put("/v1/usuarios/{id}", tags=["HTTP CRUD"])
 async def actualizar_usuario(id:int, usuario: dict):
     for index, usr in enumerate(usuarios):
         if usr["id"] == id:
@@ -97,11 +88,7 @@ async def actualizar_usuario(id:int, usuario: dict):
         detail="usuario no encontrado"
         )
 
-@app.get("/usuario/")
-async def obtener_usuario(edad: Optional[int] = None):
-    if edad:
-        return {"mensaje": f"Tienes {edad} años"}
-@app.delete("/v1/usuarios/", tags=["CRUD HTTP"])
+@app.delete("/v1/usuarios/", tags=["HTTP CRUD"])
 async def eliminar_usuario(id:int): 
     for index, usr in enumerate(usuarios):
         if usr["id"] == id:
