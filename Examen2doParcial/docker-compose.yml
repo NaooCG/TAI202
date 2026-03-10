@@ -1,0 +1,11 @@
+services:
+  api:
+    build: .
+    container_name: Server_2doParcial
+    ports:
+      - "5003:5003"
+    volumes:
+      - ./app:/app/app
+
+
+
