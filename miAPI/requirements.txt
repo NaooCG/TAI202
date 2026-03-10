@@ -1,3 +1,9 @@
 uvicorn[standart]
 fastapi
 
+#PARA LEVANTAR CONTENEDOR DOCKER
+
+#Se entra a la carpeta
+#	- cd C:\TAI202\miAPI
+#Se ejecuta el siguiente comando
+#	- docker-compose up -d --build
