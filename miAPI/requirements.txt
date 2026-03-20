@@ -1,5 +1,7 @@
 uvicorn[standart]
 fastapi
+sqlalchemy
+psycopg2-binary
 
 #PARA LEVANTAR CONTENEDOR DOCKER
 
