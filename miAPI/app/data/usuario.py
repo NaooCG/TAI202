@@ -1,5 +1,5 @@
 from sqlalchemy import Column, Integer,String
-from miAPI.app.data.db import Base
+from app.data.db import Base
 
 class usuario(Base):
     __tablename__="tb-usuarios"
